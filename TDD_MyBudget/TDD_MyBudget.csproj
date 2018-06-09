@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BudgerCalculator.cs" />
+    <Compile Include="BudgetCalculator.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="UnitTest1.cs" />

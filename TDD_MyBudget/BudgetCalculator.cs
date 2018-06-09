@@ -1,42 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TDD_MyBudget
 {
-    public class BudgerCalculator
+    public class BudgetCalculator
     {
         private readonly IRepository<Budget> _repo;
-        public BudgerCalculator(IRepository<Budget> repo)
+
+        public BudgetCalculator(IRepository<Budget> repo)
         {
             _repo = repo;
         }
-        public Decimal ReturnAmount(DateTime StartDate, DateTime EndDate)
+
+        public Decimal TotalAmount(DateTime start, DateTime end)
         {
-            if (DateTime.Compare(EndDate, StartDate) < 0)
+            if (DateTime.Compare(end, start) < 0)
             {
                 throw new Exception("Illegal date");
             }
 
-            if (StartDate.Year == EndDate.Year && StartDate.Month == EndDate.Month)
+            if (start.Year == end.Year && start.Month == end.Month)
             {
-                return GetRsult(StartDate, EndDate);
+                return GetRsult(start, end);
             }
 
             decimal totalBudget = 0;
-            for (int year = StartDate.Year; year <= EndDate.Year; year++)
+            for (int year = start.Year; year <= end.Year; year++)
             {
-                for (int month = StartDate.Month; month <= EndDate.Month; month++)
+                for (int month = start.Month; month <= end.Month; month++)
                 {
-                    DateTime startDate = StartDate.Year == year && StartDate.Month == month
-                        ? new DateTime(year, month, StartDate.Day)
+                    DateTime startDate = start.Year == year && start.Month == month
+                        ? new DateTime(year, month, start.Day)
                         : new DateTime(year, month, 1);
-                    DateTime endDate = EndDate.Year == year && EndDate.Month == month
-                        ? new DateTime(year, month, EndDate.Day)
+                    DateTime endDate = end.Year == year && end.Month == month
+                        ? new DateTime(year, month, end.Day)
                         : new DateTime(year, month, DateTime.DaysInMonth(year, month));
                     totalBudget += GetRsult(startDate, endDate);
                 }
