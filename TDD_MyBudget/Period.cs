@@ -30,6 +30,11 @@ namespace TDD_MyBudget
 
         public int OverlappingDays(Period otherPeriod)
         {
+            if (HasNoOverlap(otherPeriod))
+            {
+                return 0;
+            }
+
             DateTime overlapStartDate = Start > otherPeriod.Start
                 ? Start
                 : otherPeriod.Start;
@@ -39,6 +44,11 @@ namespace TDD_MyBudget
                 : otherPeriod.End;
 
             return (overlapEndDate - overlapStartDate).Days + 1;
+        }
+
+        private bool HasNoOverlap(Period otherPeriod)
+        {
+            return otherPeriod.End < Start || otherPeriod.Start > End;
         }
     }
 }

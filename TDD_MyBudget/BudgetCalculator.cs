@@ -36,6 +36,12 @@ namespace TDD_MyBudget
         private decimal TotalBudgetOfMultiMonthsPeriod(Period period, List<Budget> budgets)
         {
             decimal totalBudget = 0;
+            foreach (var budget in budgets)
+            {
+                totalBudget += budget.EffectiveAmount(period);
+            }
+
+            return totalBudget;
             for (int year = period.Start.Year; year <= period.End.Year; year++)
             {
                 for (int month = period.Start.Month; month <= period.End.Month; month++)
