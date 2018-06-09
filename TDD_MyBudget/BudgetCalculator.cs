@@ -50,7 +50,7 @@ namespace TDD_MyBudget
 
             var days = (endDate - startDate).Days + 1;
 
-            return days * budget.Amount / DateTime.DaysInMonth(startDate.Year, startDate.Month);
+            return days * budget.Amount / budget.DaysInMonth;
         }
     }
 }
