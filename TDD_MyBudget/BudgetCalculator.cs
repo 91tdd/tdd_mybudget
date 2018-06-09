@@ -40,27 +40,28 @@ namespace TDD_MyBudget
             {
                 for (int month = period.Start.Month; month <= period.End.Month; month++)
                 {
-                    DateTime startDate = period.Start.Year == year && period.Start.Month == month
+                    DateTime overlapStartDate = period.Start.Year == year && period.Start.Month == month
                         ? new DateTime(year, month, period.Start.Day)
                         : new DateTime(year, month, 1);
-                    DateTime endDate = period.End.Year == year && period.End.Month == month
+
+                    DateTime overlapEndDate = period.End.Year == year && period.End.Month == month
                         ? new DateTime(year, month, period.End.Day)
                         : new DateTime(year, month, DateTime.DaysInMonth(year, month));
-                    totalBudget += EffectiveAmount(budgets, new Period(startDate, endDate));
+
+                    Period overlapPeriod = new Period(overlapStartDate, overlapEndDate);
+                    var budget = budgets.FirstOrDefault(x => x.Month == $"{overlapPeriod.Start:yyyyMM}");
+                    if (budget != null)
+                    {
+                        totalBudget += EffectiveAmount(overlapPeriod, budget);
+                    }
                 }
             }
 
             return totalBudget;
         }
 
-        private decimal EffectiveAmount(List<Budget> budgets, Period period)
+        private decimal EffectiveAmount(Period period, Budget budget)
         {
-            var budget = budgets.FirstOrDefault(x => x.Month == $"{period.Start:yyyyMM}");
-            if (budget == null)
-            {
-                return 0;
-            }
-
             return period.Days() * budget.DailyAmount();
         }
     }
