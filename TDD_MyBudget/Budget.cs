@@ -24,6 +24,14 @@ namespace TDD_MyBudget
 
         public string Month { get; set; }
 
+        public DateTime LastDay
+        {
+            get
+            {
+                return DateTime.ParseExact(Month + DaysInMonth, "yyyyMMdd", null);
+            }
+        }
+
         public int DailyAmount()
         {
             return Amount / DaysInMonth;

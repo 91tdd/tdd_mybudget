@@ -49,7 +49,7 @@ namespace TDD_MyBudget
 
                         DateTime overlapEndDate = IsLastMonthOfPeriod(period, year, month)
                             ? period.End
-                            : new DateTime(year, month, DateTime.DaysInMonth(year, month));
+                            : budget.LastDay;
 
                         Period overlapPeriod = new Period(overlapStartDate, overlapEndDate);
                         var effectiveAmount = EffectiveAmount(overlapPeriod, budget);
