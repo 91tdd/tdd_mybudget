@@ -43,11 +43,11 @@ namespace TDD_MyBudget
                     var budget = budgets.FirstOrDefault(x => x.Month == $"{year:0000}{month:00}");
                     if (budget != null)
                     {
-                        DateTime overlapStartDate = IsFirstMonthOfPeriod(period, year, month)
+                        DateTime overlapStartDate = period.Start > budget.FirstDay
                             ? period.Start
                             : budget.FirstDay;
 
-                        DateTime overlapEndDate = IsLastMonthOfPeriod(period, year, month)
+                        DateTime overlapEndDate = period.End < budget.LastDay
                             ? period.End
                             : budget.LastDay;
 
@@ -59,16 +59,6 @@ namespace TDD_MyBudget
             }
 
             return totalBudget;
-        }
-
-        private static bool IsLastMonthOfPeriod(Period period, int year, int month)
-        {
-            return period.End.Year == year && period.End.Month == month;
-        }
-
-        private static bool IsFirstMonthOfPeriod(Period period, int year, int month)
-        {
-            return period.Start.Year == year && period.Start.Month == month;
         }
 
         private decimal EffectiveAmount(Period period, Budget budget)
