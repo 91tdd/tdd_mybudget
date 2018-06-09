@@ -45,7 +45,7 @@ namespace TDD_MyBudget
                     {
                         DateTime overlapStartDate = IsFirstMonthOfPeriod(period, year, month)
                             ? period.Start
-                            : new DateTime(year, month, 1);
+                            : budget.FirstDay;
 
                         DateTime overlapEndDate = IsLastMonthOfPeriod(period, year, month)
                             ? period.End
