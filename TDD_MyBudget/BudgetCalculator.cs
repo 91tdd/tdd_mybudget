@@ -15,22 +15,21 @@ namespace TDD_MyBudget
         public Decimal TotalAmount(DateTime start, DateTime end)
         {
             var period = new Period(start, end);
-
-            if (start.Year == end.Year && start.Month == end.Month)
+            if (period.Start.Year == period.End.Year && period.Start.Month == period.End.Month)
             {
-                return GetRsult(start, end);
+                return GetRsult(period.Start, period.End);
             }
 
             decimal totalBudget = 0;
-            for (int year = start.Year; year <= end.Year; year++)
+            for (int year = period.Start.Year; year <= period.End.Year; year++)
             {
-                for (int month = start.Month; month <= end.Month; month++)
+                for (int month = period.Start.Month; month <= period.End.Month; month++)
                 {
-                    DateTime startDate = start.Year == year && start.Month == month
-                        ? new DateTime(year, month, start.Day)
+                    DateTime startDate = period.Start.Year == year && period.Start.Month == month
+                        ? new DateTime(year, month, period.Start.Day)
                         : new DateTime(year, month, 1);
-                    DateTime endDate = end.Year == year && end.Month == month
-                        ? new DateTime(year, month, end.Day)
+                    DateTime endDate = period.End.Year == year && period.End.Month == month
+                        ? new DateTime(year, month, period.End.Day)
                         : new DateTime(year, month, DateTime.DaysInMonth(year, month));
                     totalBudget += GetRsult(startDate, endDate);
                 }
