@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TDD_MyBudget
@@ -15,9 +16,10 @@ namespace TDD_MyBudget
         public Decimal TotalAmount(DateTime start, DateTime end)
         {
             var period = new Period(start, end);
+            var budgets = _repo.GetBudget();
             if (period.IsSameMonth())
             {
-                return GetRsult(period.Start, period.End);
+                return EffectiveAmount(period.Start, period.End, budgets);
             }
 
             decimal totalBudget = 0;
@@ -31,20 +33,20 @@ namespace TDD_MyBudget
                     DateTime endDate = period.End.Year == year && period.End.Month == month
                         ? new DateTime(year, month, period.End.Day)
                         : new DateTime(year, month, DateTime.DaysInMonth(year, month));
-                    totalBudget += GetRsult(startDate, endDate);
+                    totalBudget += EffectiveAmount(startDate, endDate, budgets);
                 }
             }
 
             return totalBudget;
         }
 
-        private decimal GetRsult(DateTime StartDate, DateTime EndDate)
+        private decimal EffectiveAmount(DateTime startDate, DateTime endDate, List<Budget> budgets)
         {
-            var budgetResult = _repo.GetBudget().FirstOrDefault(x => x.Month == string.Format("{0:yyyyMM}", StartDate));
+            var budgetResult = budgets.FirstOrDefault(x => x.Month == $"{startDate:yyyyMM}");
 
-            var budget = (budgetResult == null) ? 0 : budgetResult.Amount;
+            var budget = budgetResult?.Amount ?? 0;
 
-            var amount = budget * ((EndDate - StartDate).Days + 1) / DateTime.DaysInMonth(StartDate.Year, StartDate.Month);
+            var amount = budget * ((endDate - startDate).Days + 1) / DateTime.DaysInMonth(startDate.Year, startDate.Month);
 
             return amount;
         }
