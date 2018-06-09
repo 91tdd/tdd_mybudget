@@ -54,7 +54,7 @@ namespace TDD_MyBudget
 
         private decimal EffectiveAmountOfBudget(Period period, Budget budget)
         {
-            return period.OverlappingDays(new Period(budget.FirstDay, budget.LastDay)) * budget.DailyAmount();
+            return period.OverlappingDays(budget.PeriodFromBudget()) * budget.DailyAmount();
         }
     }
 }

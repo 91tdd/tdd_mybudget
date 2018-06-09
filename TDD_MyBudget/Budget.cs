@@ -36,5 +36,10 @@ namespace TDD_MyBudget
         {
             return Amount / DaysInMonth;
         }
+
+        public Period PeriodFromBudget()
+        {
+            return new Period(FirstDay, LastDay);
+        }
     }
 }
