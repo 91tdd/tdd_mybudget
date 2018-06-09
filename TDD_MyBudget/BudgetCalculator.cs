@@ -19,9 +19,7 @@ namespace TDD_MyBudget
             var budgets = _repo.GetBudget();
             if (period.IsSameMonth())
             {
-                DateTime startDate = period.Start;
-                DateTime endDate = period.End;
-                return EffectiveAmount(budgets, new Period(startDate, endDate));
+                return EffectiveAmount(budgets, period);
             }
 
             decimal totalBudget = 0;
