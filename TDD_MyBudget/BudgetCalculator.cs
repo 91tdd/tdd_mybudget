@@ -42,13 +42,15 @@ namespace TDD_MyBudget
 
         private decimal EffectiveAmount(DateTime startDate, DateTime endDate, List<Budget> budgets)
         {
-            var budgetResult = budgets.FirstOrDefault(x => x.Month == $"{startDate:yyyyMM}");
+            var budget = budgets.FirstOrDefault(x => x.Month == $"{startDate:yyyyMM}");
+            if (budget == null)
+            {
+                return 0;
+            }
 
-            var budget = budgetResult?.Amount ?? 0;
+            var days = (endDate - startDate).Days + 1;
 
-            var amount = budget * ((endDate - startDate).Days + 1) / DateTime.DaysInMonth(startDate.Year, startDate.Month);
-
-            return amount;
+            return days * budget.Amount / DateTime.DaysInMonth(startDate.Year, startDate.Month);
         }
     }
 }
