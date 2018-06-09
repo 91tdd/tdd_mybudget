@@ -23,5 +23,10 @@ namespace TDD_MyBudget
         }
 
         public string Month { get; set; }
+
+        public int DailyAmount()
+        {
+            return Amount / DaysInMonth;
+        }
     }
 }
