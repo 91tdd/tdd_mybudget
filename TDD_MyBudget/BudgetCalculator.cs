@@ -47,8 +47,8 @@ namespace TDD_MyBudget
                             ? period.Start
                             : new DateTime(year, month, 1);
 
-                        DateTime overlapEndDate = period.End.Year == year && period.End.Month == month
-                            ? new DateTime(year, month, period.End.Day)
+                        DateTime overlapEndDate = IsLastMonthOfPeriod(period, year, month)
+                            ? period.End
                             : new DateTime(year, month, DateTime.DaysInMonth(year, month));
 
                         Period overlapPeriod = new Period(overlapStartDate, overlapEndDate);
@@ -59,6 +59,11 @@ namespace TDD_MyBudget
             }
 
             return totalBudget;
+        }
+
+        private static bool IsLastMonthOfPeriod(Period period, int year, int month)
+        {
+            return period.End.Year == year && period.End.Month == month;
         }
 
         private static bool IsFirstMonthOfPeriod(Period period, int year, int month)
