@@ -21,5 +21,11 @@ namespace TDD_MyBudget
         {
             return Start.Year == End.Year && Start.Month == End.Month;
         }
+
+        public int Days()
+        {
+            var days = (End - Start).Days + 1;
+            return days;
+        }
     }
 }

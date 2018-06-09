@@ -19,7 +19,9 @@ namespace TDD_MyBudget
             var budgets = _repo.GetBudget();
             if (period.IsSameMonth())
             {
-                return EffectiveAmount(period.Start, period.End, budgets);
+                DateTime startDate = period.Start;
+                DateTime endDate = period.End;
+                return EffectiveAmount(budgets, new Period(startDate, endDate));
             }
 
             decimal totalBudget = 0;
@@ -33,24 +35,22 @@ namespace TDD_MyBudget
                     DateTime endDate = period.End.Year == year && period.End.Month == month
                         ? new DateTime(year, month, period.End.Day)
                         : new DateTime(year, month, DateTime.DaysInMonth(year, month));
-                    totalBudget += EffectiveAmount(startDate, endDate, budgets);
+                    totalBudget += EffectiveAmount(budgets, new Period(startDate, endDate));
                 }
             }
 
             return totalBudget;
         }
 
-        private decimal EffectiveAmount(DateTime startDate, DateTime endDate, List<Budget> budgets)
+        private decimal EffectiveAmount(List<Budget> budgets, Period period)
         {
-            var budget = budgets.FirstOrDefault(x => x.Month == $"{startDate:yyyyMM}");
+            var budget = budgets.FirstOrDefault(x => x.Month == $"{period.Start:yyyyMM}");
             if (budget == null)
             {
                 return 0;
             }
 
-            var days = (endDate - startDate).Days + 1;
-
-            return days * budget.DailyAmount();
+            return period.Days() * budget.DailyAmount();
         }
     }
 }
