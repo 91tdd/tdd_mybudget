@@ -7,7 +7,7 @@ namespace TDD_MyBudget
         public Period(DateTime start, DateTime end)
         {
             if (DateTime.Compare(end, start) < 0)
-            { 
+            {
                 throw new Exception("Illegal date");
             }
             Start = start;
@@ -26,6 +26,19 @@ namespace TDD_MyBudget
         {
             var days = (End - Start).Days + 1;
             return days;
+        }
+
+        public int OverlappingDays(Period otherPeriod)
+        {
+            DateTime overlapStartDate = Start > otherPeriod.Start
+                ? Start
+                : otherPeriod.Start;
+
+            DateTime overlapEndDate = End < otherPeriod.End
+                ? End
+                : otherPeriod.End;
+
+            return (overlapEndDate - overlapStartDate).Days + 1;
         }
     }
 }
