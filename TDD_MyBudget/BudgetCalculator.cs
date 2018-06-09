@@ -43,18 +43,12 @@ namespace TDD_MyBudget
                     var budget = budgets.FirstOrDefault(x => x.Month == $"{year:0000}{month:00}");
                     if (budget != null)
                     {
-                        var effectiveAmount = EffectiveAmountOfBudget(period, budget);
-                        totalBudget += effectiveAmount;
+                        totalBudget += budget.EffectiveAmount(period);
                     }
                 }
             }
 
             return totalBudget;
-        }
-
-        private decimal EffectiveAmountOfBudget(Period period, Budget budget)
-        {
-            return period.OverlappingDays(budget.PeriodFromBudget()) * budget.DailyAmount();
         }
     }
 }
