@@ -40,18 +40,18 @@ namespace TDD_MyBudget
             {
                 for (int month = period.Start.Month; month <= period.End.Month; month++)
                 {
-                    DateTime overlapStartDate = period.Start.Year == year && period.Start.Month == month
-                        ? new DateTime(year, month, period.Start.Day)
-                        : new DateTime(year, month, 1);
-
-                    DateTime overlapEndDate = period.End.Year == year && period.End.Month == month
-                        ? new DateTime(year, month, period.End.Day)
-                        : new DateTime(year, month, DateTime.DaysInMonth(year, month));
-
-                    Period overlapPeriod = new Period(overlapStartDate, overlapEndDate);
-                    var budget = budgets.FirstOrDefault(x => x.Month == $"{overlapPeriod.Start:yyyyMM}");
+                    var budget = budgets.FirstOrDefault(x => x.Month == $"{year:0000}{month:00}");
                     if (budget != null)
                     {
+                        DateTime overlapStartDate = period.Start.Year == year && period.Start.Month == month
+                            ? new DateTime(year, month, period.Start.Day)
+                            : new DateTime(year, month, 1);
+
+                        DateTime overlapEndDate = period.End.Year == year && period.End.Month == month
+                            ? new DateTime(year, month, period.End.Day)
+                            : new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
+                        Period overlapPeriod = new Period(overlapStartDate, overlapEndDate);
                         totalBudget += EffectiveAmount(overlapPeriod, budget);
                     }
                 }
