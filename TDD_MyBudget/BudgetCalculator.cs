@@ -15,7 +15,7 @@ namespace TDD_MyBudget
         public Decimal TotalAmount(DateTime start, DateTime end)
         {
             var period = new Period(start, end);
-            if (period.Start.Year == period.End.Year && period.Start.Month == period.End.Month)
+            if (period.IsSameMonth())
             {
                 return GetRsult(period.Start, period.End);
             }
@@ -36,7 +36,6 @@ namespace TDD_MyBudget
             }
 
             return totalBudget;
-            return 0;
         }
 
         private decimal GetRsult(DateTime StartDate, DateTime EndDate)

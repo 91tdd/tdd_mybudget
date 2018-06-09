@@ -16,5 +16,10 @@ namespace TDD_MyBudget
 
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
+
+        public bool IsSameMonth()
+        {
+            return Start.Year == End.Year && Start.Month == End.Month;
+        }
     }
 }
