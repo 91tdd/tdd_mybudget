@@ -14,10 +14,7 @@ namespace TDD_MyBudget
 
         public Decimal TotalAmount(DateTime start, DateTime end)
         {
-            if (DateTime.Compare(end, start) < 0)
-            {
-                throw new Exception("Illegal date");
-            }
+            var period = new Period(start, end);
 
             if (start.Year == end.Year && start.Month == end.Month)
             {
